@@ -2,7 +2,7 @@
 
 const EventsPage = () => {
   return (
-    <div>Events page rwerew </div>
+    <div>Esto donde está???</div>
   )
 }
 
