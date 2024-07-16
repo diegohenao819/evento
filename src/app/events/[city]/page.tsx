@@ -1,3 +1,4 @@
+import EventLists from "@/components/eventLists";
 import { EventoEvent } from "@/lib/types";
 
 type cityProps = {
@@ -17,18 +18,16 @@ const city = async ({ params }: cityProps) => {
   return (
     <main>
       {city === "all" ? (
-        <h1 className="text-3xl lg:text-6xl font-bold tracking-tight">
+        <h1 className="text-3xl lg:text-6xl font-bold tracking-tight mb-28 text-center">
           All events
         </h1>
       ) : (
-        <h1 className="text-3xl lg:text-6xl font-bold tracking-tight">
+        <h1 className="text-3xl lg:text-6xl font-bold tracking-tight mb-28 text-center">
           Events in: {city.toUpperCase().charAt(0) + city.slice(1)}
         </h1>
       )}
 
-      {events.map((event) => (
-        <li key={event.id}>{event.name} </li>
-      ))}
+      <EventLists events={events} />
     </main>
   );
 };

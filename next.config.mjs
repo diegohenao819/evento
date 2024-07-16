@@ -5,9 +5,15 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-            hostname: 'images.vexels.com'
-        }],
-}
+                hostname: 'images.vexels.com'
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com'
+            },
+
+        ],
+    }
 }
 
 export default nextConfig;
