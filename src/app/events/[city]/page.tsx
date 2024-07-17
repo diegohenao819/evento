@@ -1,5 +1,5 @@
 import ListCards from "@/components/listCards";
-import { EventoEvent } from "@/lib/types";
+import { EventoEvent } from "@prisma/client";
 import { Suspense } from "react";
 import loading from "@/app/loading";
 import Loading from "@/app/loading";

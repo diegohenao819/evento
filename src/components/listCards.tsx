@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from './card'
-import  {EventoEvent}  from '../lib/types'
+import  {EventoEvent}  from '@prisma/client'
 
 
 type ListCardsProps = {
