@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import ListCards from "@/components/listCards";
-=======
-import EventLists from "@/components/eventLists";
->>>>>>> 3809b7e3335b386372901583be0b2e25125a857d
 import { EventoEvent } from "@/lib/types";
 
 type cityProps = {
