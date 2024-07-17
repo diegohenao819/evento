@@ -30,7 +30,7 @@ const city = async ({ params }: cityProps) => {
         <h1 className="text-3xl lg:text-6xl font-bold tracking-tight text-center">
 =======
         <h1 className="text-3xl lg:text-6xl font-bold tracking-tight mb-28 text-center">
-          All events
+          All events.
         </h1>
       ) : (
         <h1 className="text-3xl lg:text-6xl font-bold tracking-tight mb-28 text-center">
