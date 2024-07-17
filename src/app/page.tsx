@@ -8,18 +8,12 @@ export default function Home() {
         Find events around you
       </h1>
       <p className="mb-12 mt-7 text-2xl lg:text-3xl opacity-75">
-        Browse more than{" "}
-        <span className="font-bold italic underline text-accent">
-          10,000
-        </span>{" "}
-        events around you{" "}
+        Browse more than
+        <span className="font-bold italic underline text-accent">10,000</span>
+        events around you
       </p>
 
-     
-     <Form />
-
-
-
+      <Form />
 
       <section className="mt-4 flex gap-x-4 text-sm text-white/50">
         <p>Popular: </p>
