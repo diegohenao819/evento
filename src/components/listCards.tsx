@@ -4,10 +4,17 @@ import  {EventoEvent}  from '../lib/types'
 
 
 type ListCardsProps = {
-  events: EventoEvent[]
-}
+  city: string;
+};
 
-const ListCards = ({events}: ListCardsProps) => {
+
+const ListCards = async ({city}: ListCardsProps) => {
+
+  const response = await fetch(
+    `https://bytegrad.com/course-assets/projects/evento/api/events?city=${city}`
+  );
+  const events: EventoEvent[] = await response.json();
+
   return (
     <main className="flex gap-2 flex-wrap flex-row justify-center items-center">
         {events.map((event) => (

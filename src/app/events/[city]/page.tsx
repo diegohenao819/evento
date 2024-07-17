@@ -1,5 +1,8 @@
 import ListCards from "@/components/listCards";
 import { EventoEvent } from "@/lib/types";
+import { Suspense } from "react";
+import loading from "@/app/loading";
+import Loading from "@/app/loading";
 
 type cityProps = {
   params: {
@@ -10,11 +13,7 @@ type cityProps = {
 const city = async ({ params }: cityProps) => {
   const city = params.city;
 
-  const response = await fetch(
-    `https://bytegrad.com/course-assets/projects/evento/api/events?city=${city}`
-  );
-  const events: EventoEvent[] = await response.json();
-
+ 
   return (
     <main>
       {city === "all" ? (
@@ -28,7 +27,9 @@ const city = async ({ params }: cityProps) => {
       )}
 
       <div className="flex   flex-wrap mt-8 w-[1200px]  p-6 justify-center">
-        <ListCards events={events} />
+       <Suspense fallback={<Loading/> } >
+         <ListCards city= {city} />
+       </Suspense>
       </div>
     </main>
   );
