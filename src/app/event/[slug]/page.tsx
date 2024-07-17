@@ -1,6 +1,7 @@
 
 
 
+import { Metadata } from "next";
 import Image from "next/image";
 
 type Props = {
@@ -11,6 +12,15 @@ type Props = {
 
 
 
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+  const slug = params.slug;
+
+  return {
+    title: `${slug === "all" ? "All events" : `Events in: ${slug.toUpperCase().charAt(0) + slug.slice(1)}`}`,  
+    description: ` ${slug === "all" ? "All events" : `Events in: ${slug}`}` ,
+  }
+
+}
 
 
 export default async function EventPage({ params }: Props) {

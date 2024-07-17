@@ -3,12 +3,24 @@ import { EventoEvent } from "@/lib/types";
 import { Suspense } from "react";
 import loading from "@/app/loading";
 import Loading from "@/app/loading";
+import { Metadata } from "next";
 
 type cityProps = {
   params: {
     city: string;
   };
 };
+
+export async function generateMetadata({params}: cityProps): Promise<Metadata> {
+  const city = params.city;
+
+  return {
+    title: `${city === "all" ? "All events" : `Events in: ${city.toUpperCase().charAt(0) + city.slice(1)}`}`,  
+    description: ` ${city === "all" ? "All events" : `Events in: ${city}`}` ,
+  }
+
+}
+
 
 const city = async ({ params }: cityProps) => {
   const city = params.city;
