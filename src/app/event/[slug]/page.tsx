@@ -1,6 +1,7 @@
 
 
 
+import { getEvent } from "@/lib/utils";
 import { Metadata } from "next";
 import Image from "next/image";
 
@@ -25,10 +26,14 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
 export default async function EventPage({ params }: Props) {
   const slug = params.slug;
-  const response = await fetch(
-    `https://bytegrad.com/course-assets/projects/evento/api/events/${slug}`
-  );
-  const event = await response.json();
+
+
+  const event = await getEvent(slug);
+  if (!event) {
+    // Handle the case when event is null
+    return null;
+  }
+  console.log("hooooooola", event);
 
   return (
     <main>
