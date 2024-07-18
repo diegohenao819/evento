@@ -1,9 +1,7 @@
-import ListCards from "@/components/listCards";
-import { EventoEvent } from "@prisma/client";
-import { Suspense } from "react";
-import loading from "@/app/loading";
 import Loading from "@/app/loading";
+import ListCards from "@/components/listCards";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 type cityProps = {
   params: {
@@ -11,21 +9,31 @@ type cityProps = {
   };
 };
 
-export async function generateMetadata({params}: cityProps): Promise<Metadata> {
+
+type EventPageProps = cityProps & {
+  searchParams: {[key: string]: string | string[] | undefined};
+};
+
+
+export async function generateMetadata({
+  params,
+}: cityProps): Promise<Metadata> {
   const city = params.city;
 
   return {
-    title: `${city === "all" ? "All events" : `Events in: ${city.toUpperCase().charAt(0) + city.slice(1)}`}`,  
-    description: ` ${city === "all" ? "All events" : `Events in: ${city}`}` ,
-  }
-
+    title: `${
+      city === "all"
+        ? "All events"
+        : `Events in: ${city.toUpperCase().charAt(0) + city.slice(1)}`
+    }`,
+    description: ` ${city === "all" ? "All events" : `Events in: ${city}`}`,
+  };
 }
 
-
-const city = async ({ params }: cityProps) => {
+const city = async ({ params, searchParams }: EventPageProps) => {
   const city = params.city;
+  const page = searchParams.page || 1;
 
- 
   return (
     <main>
       {city === "all" ? (
@@ -39,9 +47,9 @@ const city = async ({ params }: cityProps) => {
       )}
 
       <div className="flex   flex-wrap mt-8 w-[1200px]  p-6 justify-center">
-       <Suspense fallback={<Loading/> } >
-         <ListCards city= {city} />
-       </Suspense>
+        <Suspense key={city + page} fallback={<Loading />}>
+          <ListCards  city={city} page={+page} />
+        </Suspense>
       </div>
     </main>
   );

@@ -1,9 +1,10 @@
+import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import prisma from "./db";
 
 
 
-export async function getEvents(city: string) {
+export const getEvents = unstable_cache(async(city: string, page = 1)=> {
   const events = await prisma.eventoEvent.findMany({
     where: {
       city  : city === "all"? undefined : city.toUpperCase().charAt(0) + city.slice(1),
@@ -11,17 +12,35 @@ export async function getEvents(city: string) {
     orderBy: {
       date: 'asc',
     },
+    take: 6,
+    skip: (page - 1) * 6,
   });
+
+  let totalCount;
+
+  if (city === "all") {
+    totalCount = await prisma.eventoEvent.count();
+  }else{
+    totalCount = await prisma.eventoEvent.count({
+      where: {
+        city: city.toUpperCase().charAt(0) + city.slice(1),
+      },
+    });
+  }
 
   if (!events) {
     return notFound()
 }
-
-  return events;
+  return {
+    events,
+    totalCount,
+  }; 
 }
+)
 
 
-export async function getEvent(slug: string) {
+
+export const getEvent =  unstable_cache(async(slug: string)=> {
   const event = await prisma.eventoEvent.findUnique({
     where: {
       slug: slug,
@@ -33,4 +52,4 @@ export async function getEvent(slug: string) {
   }
 
   return event;
-}
+})

@@ -1,21 +1,24 @@
 import { getEvents } from "@/lib/utils";
-import { EventoEvent } from "@prisma/client";
 import Link from "next/link";
 import Card from "./card";
+import PaginationControls from "./PaginationControls";
 
 type ListCardsProps = {
   city: string;
+  page: number;
 };
 
-const ListCards = async ({ city }: ListCardsProps) => {
-  const events: EventoEvent[] = await getEvents(city);
+const ListCards = async ({ city, page }: ListCardsProps) => {
+  const { events, totalCount } = await getEvents(city, page);
+  const previousPath = page > 1 ? `/events/${city}?page=${page - 1}` : "";
+  const nextPath = totalCount > 6 * page ? `/events/${city}?page=${page + 1}` : "";
 
   if (!events) {
     events === null;
   }
 
   return (
-    <main className="flex gap-2 flex-wrap flex-row justify-center items-center">
+    <main className="flex gap-5 flex-wrap flex-row justify-center items-center ">
       {events.length === 0 ? (
         <div className="flex flex-col items-center">
           <h1 className="text-3xl text-center mb-5">No events in this city</h1>
@@ -30,6 +33,8 @@ const ListCards = async ({ city }: ListCardsProps) => {
       ) : (
         events.map((event) => <Card key={event.id} event={event} />)
       )}
+
+      <PaginationControls previousPath={previousPath} nextPath={nextPath} />
     </main>
   );
 };
