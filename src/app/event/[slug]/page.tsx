@@ -1,6 +1,3 @@
-
-
-
 import { getEvent } from "@/lib/utils";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -11,29 +8,34 @@ type Props = {
   };
 };
 
-
-
-export async function generateMetadata({params}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.slug;
 
   return {
-    title: `${slug === "all" ? "All events" : `Events in: ${slug.toUpperCase().charAt(0) + slug.slice(1)}`}`,  
-    description: ` ${slug === "all" ? "All events" : `Events in: ${slug}`}` ,
-  }
-
+    title: `${
+      slug === "all"
+        ? "All events"
+        : `Events in: ${slug.toUpperCase().charAt(0) + slug.slice(1)}`
+    }`,
+    description: ` ${slug === "all" ? "All events" : `Events in: ${slug}`}`,
+  };
 }
-
 
 export default async function EventPage({ params }: Props) {
   const slug = params.slug;
 
-
   const event = await getEvent(slug);
   if (!event) {
-    // Handle the case when event is null
-    return null;
+    // Render a message or a 404 page
+    return (
+      <main>
+        <section className="py-14 md:py-20 text-center">
+          <h1 className="text-4xl">Event Not Found</h1>
+          <p className="mt-4">The event you are looking for does not exist.</p>
+        </section>
+      </main>
+    );
   }
-  console.log("hooooooola", event);
 
   return (
     <main>
